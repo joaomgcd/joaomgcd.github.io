@@ -33,6 +33,7 @@ broadcastChannel.onTokenRequested(async senderId=>{
 	await getTokenAndReport(senderId);
 });
 fcm.onMessage.addListener(async payload=>{
+	registration.showNotification("Test Notification",{"body":payload.data.message});
 	broadcastChannel.reportMessage(payload);
 });
 self.addEventListener('message', async event => {
