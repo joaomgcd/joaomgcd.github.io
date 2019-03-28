@@ -1,7 +1,31 @@
 <!DOCTYPE html>
 <html>
+<head>
+	<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-messaging.js"></script>
+	<script src="/fcm.js"></script>
+	<script type="text/javascript">
+		const YOUR_SENDER_ID = "238833076313"
+		const fcm = new FCM();
+		const init = async () => {
+			fcm.register(YOUR_SENDER_ID).then(token=> {
+				console.log("Got token in page",token);
+				document.querySelector("#token").innerHTML = token;
+			});
+			
+			fcm.onMessage.addListener(payload=>{
+				console.log("New Message!",payload);
+				document.querySelector("#message").innerHTML = payload.data.message;
+			});
+		};
+		init();
+	</script>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+	<div>
+		<div>Send a message to:</div>
+		<pre id="token"></pre>
+	</div>
+	<div id="message"></div>
 </body>
 </html>
